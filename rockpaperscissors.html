@@ -6,9 +6,19 @@
     <title>Rock Paper Scissors Game</title>
 </head>
 <body>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+    <div id="status"></div>
+
     <script>
-            let countPlayerScore = 0;
-            let countOpponentScore = 0;
+        let btnRock = document.querySelector('#rock');
+        let btnPaper = document.querySelector('#paper');
+        let btnScissors = document.querySelector('#scissors');
+        let gameStatus = document.querySelector('#status');
+        
+        let countPlayerScore = 0;
+        let countOpponentScore = 0;
     // Generate a random number between 1 and 3, which selects rock, paper or scissors    
         function getComputerChoice() {
             let pickRandom = Math.floor(Math.random()*3+1);
@@ -60,23 +70,30 @@
             }
             else { /*alert("You did not select rock, paper, or scissors");*/}
         }
-        function game(){
-            playRound(prompt("Pick rock, paper, or scissors"),getComputerChoice())
-            playRound(prompt("Pick rock, paper, or scissors"),getComputerChoice())
-            playRound(prompt("Pick rock, paper, or scissors"),getComputerChoice())
-            playRound(prompt("Pick rock, paper, or scissors"),getComputerChoice())
-            playRound(prompt("Pick rock, paper, or scissors"),getComputerChoice())
-            if (countPlayerScore > countOpponentScore) {
-                return alert(`Score: ${countPlayerScore} vs. ${countOpponentScore}. You win!`)
+
+        function game(choice){                 
+            playRound(choice,getComputerChoice())
+                
+            if (countPlayerScore == 5) {
+                gameStatus.textContent = `Score: ${countPlayerScore} vs. ${countOpponentScore}. You win!`
+                countPlayerScore = 0;
+                countOpponentScore = 0;
             }
-            else if (countPlayerScore < countOpponentScore) {
-                return alert(`Score: ${countPlayerScore} vs. ${countOpponentScore}. You lose!`)        
+            else if (countOpponentScore == 5) {
+                gameStatus.textContent = `Score: ${countPlayerScore} vs. ${countOpponentScore}. You lose!`
+                countPlayerScore = 0;
+                countOpponentScore = 0;        
             }
             else {
-                return alert(`Score: ${countPlayerScore} vs. ${countOpponentScore}. Tie!`)
+                gameStatus.textContent = `Score: ${countPlayerScore} vs. ${countOpponentScore}. Tie!`
             }
         }
-        game()
+        
+        btnRock.addEventListener('click', function (e) {game('rock')});
+        btnPaper.addEventListener('click', function (e) {game('paper')});
+        btnScissors.addEventListener('click', function (e) {game('scissors')});
+
+        // game()
         
 
 
